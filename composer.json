@@ -26,9 +26,9 @@
         "friendsofsymfony/jsrouting-bundle": "@stable",
         "jms/translation-bundle": "@stable"
     },
-    "target-dir": "Wyzen/ImageBundle",
+    "target-dir": "Comur/ImageBundle",
     "autoload": {
-        "psr-0": { "Comur\\ImageBundle": "wyzen/image-bundle" }
+        "psr-0": { "Comur\\ImageBundle": "" }
     },
     "extra": {
         "branch-alias": {
