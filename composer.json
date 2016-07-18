@@ -28,7 +28,7 @@
     },
     "target-dir": "Wyzen/ImageBundle",
     "autoload": {
-        "psr-0": { "Wyzen\\ImageBundle": "" }
+        "psr-0": { "Comur\\ImageBundle": "" }
     },
     "extra": {
         "branch-alias": {
