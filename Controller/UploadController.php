@@ -24,7 +24,10 @@ class UploadController extends Controller
         /*, $uploadUrl, $paramName, $webDir, $minWidth=1, $minHeight=1*/
     ){
         $config = json_decode($request->request->get('config'),true);
-
+        
+        //If file system stream is defined, Set stream path
+        $streamPath = $this->container->hasParameter('comur_image.stream_path') ? $this->container->getParameter('comur_image.stream_path') : null;
+        
         $thumbsDir = $this->container->getParameter('comur_image.thumbs_dir');
         $thumbSize = $this->container->getParameter('comur_image.media_lib_thumb_size');
         $uploadUrl = $config['uploadConfig']['uploadUrl'];
@@ -70,7 +73,8 @@ class UploadController extends Controller
                     'max_width' => $thumbSize,
                     'max_height' => $thumbSize
                 )
-            )
+            ),
+            'stream_path' => $streamPath
         );
 
         $transDomain = $this->container->getParameter('comur_image.translation_domain');
@@ -347,7 +351,15 @@ class UploadController extends Controller
             $destW = $srcW;
             $destH = $srcH;
         }
-        $dstR = imagecreatetruecolor( $destW, $destH );
+        try {
+            $dstR = imagecreatetruecolor( $destW, $destH );
+        } catch (\Symfony\Component\Debug\Exception\OutOfMemoryException $e){
+            $this->get('logger')->error('[Out of memory exception] Error cropping image <br /> Destination: '.$destSrc.'\tSource: '.$imgSrc.'\twidth: '.$destW.'\theight: '.$destH.
+                    '\tLine: '.$e->getLine().'\tFile: '.$e->getFile().'\nMsg: '.$e->getMessage());
+        } catch (\Exception $e){
+            $this->get('logger')->error('[Exception] Error cropping image <br /> Destination: '.$destSrc.'\tSource: '.$imgSrc.'\twidth: '.$destW.'\theight: '.$destH.
+                    '\tLine: '.$e->getLine().'\tFile: '.$e->getFile().'\nMsg: '.$e->getMessage());
+        }
         
         if($type == 'png'){
             imagealphablending( $dstR, false );
