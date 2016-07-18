@@ -7,8 +7,8 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Can OMUR",
-            "email": "omur.can@gmail.com",
+            "name": "Rahul Sharma",
+            "email": "rahul.go4worldbusiness.com",
             "homepage": "http://canomur.com"
         }
     ],
@@ -33,7 +33,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "dev"
         }
     }
 }
