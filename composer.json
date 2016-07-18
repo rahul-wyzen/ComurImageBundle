@@ -1,5 +1,5 @@
 {
-    "name": "rahul-wyzen/image-bundle",
+    "name": "wyzen/image-bundle",
     "type": "symfony-bundle",
     "description": "A bundle providing fields for image upload with jquery upload and image cropping with jcrop for symfony2",
     "keywords": ["Form Type", "image", "upload", "crop", "jcrop", "jquery upload"],
@@ -8,7 +8,7 @@
     "authors": [
         {
             "name": "Rahul Sharma",
-            "email": "rahul.go4worldbusiness.com",
+            "email": "rahul@go4worldbusiness.com",
             "homepage": "http://canomur.com"
         }
     ],
@@ -27,9 +27,9 @@
         "friendsofsymfony/jsrouting-bundle": "@stable",
         "jms/translation-bundle": "@stable"
     },
-    "target-dir": "Rahul-Wyzen/ImageBundle",
+    "target-dir": "Wyzen/ImageBundle",
     "autoload": {
-        "psr-0": { "Rahul-Wyzen\\ImageBundle": "" }
+        "psr-0": { "Wyzen\\ImageBundle": "" }
     },
     "extra": {
         "branch-alias": {
