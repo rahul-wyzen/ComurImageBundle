@@ -32,5 +32,11 @@ class ComurImageExtension extends Extension
         $container->setParameter('comur_image.gallery_thumb_size', $config['config']['gallery_thumb_size']);
         $container->setParameter('comur_image.web_dirname', $config['config']['web_dirname']);
         $container->setParameter('comur_image.translation_domain', $config['config']['translation_domain']);
+        
+        //Set stream path if it is defined
+        if (isset($config['config']['stream_path'])) {
+            
+            $container->setParameter('comur_image.stream_path', $config['config']['stream_path']);
+        }
     }
 }

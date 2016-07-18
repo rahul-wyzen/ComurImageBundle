@@ -147,7 +147,8 @@ class UploadHandler
                     'max_width' => 80,
                     'max_height' => 80
                 )
-            )
+            ),
+            'stream_path' => null
         );
         if ($options) {
             $this->options = $options + $this->options;
@@ -207,6 +208,10 @@ class UploadHandler
 
     protected function get_upload_path($file_name = null, $version = null) {
         $file_name = $file_name ? $file_name : '';
+        if ($this->options['stream_path'] != null) {
+            $version ? $version_path = '/'.$version.'/' : $version_path = '/';
+            return $this->options['stream_path'] . $this->options['upload_url'] .$version_path. $file_name;
+        }
         if (empty($version)) {
             $version_path = '';
         } else {
@@ -515,10 +520,11 @@ class UploadHandler
         $file_path = $this->get_upload_path($file_name);
         if (!empty($version)) {
             $version_dir = $this->get_upload_path(null, $version);
-            if (!is_dir($version_dir)) {
+            if (!is_dir($version_dir) && $this->options['stream_path'] === null) {
+                //Wyzen Todo:- Check here
                 mkdir($version_dir, $this->options['mkdir_mode'], true);
             }
-            $new_file_path = $version_dir.'/'.$file_name;
+            $new_file_path = rtrim($version_dir, '/').'/'.$file_name;
         } else {
             $new_file_path = $file_path;
         }
@@ -1032,15 +1038,32 @@ class UploadHandler
         if ($this->validate($uploaded_file, $file, $error, $index)) {
             $this->handle_form_data($file, $index);
             $upload_dir = $this->get_upload_path();
-            if (!is_dir($upload_dir)) {
+            //Wyzen Todo:- Check here
+            if (!is_dir($upload_dir) && empty($this->options['stream_path'])) {
                 mkdir($upload_dir, $this->options['mkdir_mode'], true);
             }
             $file_path = $this->get_upload_path($file->name);
             $append_file = $content_range && is_file($file_path) &&
                 $file->size > $this->get_file_size($file_path);
             if ($uploaded_file && is_uploaded_file($uploaded_file)) {
+                //Check if the storage location is a stream
+                if ($this->options['stream_path'] != null){
+                    $fp = fopen($file_path, 'wb');
+                    if ($fp) {
+                        $fr = fopen($uploaded_file,"rb");
+                        $image_chunk = $this->options['readfile_chunk_size'];
+                        while(!feof($fr)) {
+                            $image_content = fread($fr, $image_chunk);
+                            fwrite($fp, $image_content, $image_chunk);
+                        }
+                        fclose($fp);
+                        fclose($fr);
+                    } else {
+                        new \Symfony\Component\Config\Definition\Exception\Exception('Unable to get file system', 500, null);
+                    }
+                }
                 // multipart/formdata uploads (POST method uploads)
-                if ($append_file) {
+                else if ($append_file) {
                     file_put_contents(
                         $file_path,
                         fopen($uploaded_file, 'r'),
