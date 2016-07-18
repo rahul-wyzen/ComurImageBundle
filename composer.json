@@ -8,8 +8,7 @@
     "authors": [
         {
             "name": "Rahul Sharma",
-            "email": "rahul@go4worldbusiness.com",
-            "homepage": "http://canomur.com"
+            "email": "rahul@go4worldbusiness.com"
         }
     ],
     "require": {
@@ -33,7 +32,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "dev"
+            "dev-master": "1.0-dev"
         }
     }
 }
