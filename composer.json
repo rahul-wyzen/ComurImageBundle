@@ -1,5 +1,5 @@
 {
-    "name": "comur/rahul-wyzen/image-bundle",
+    "name": "rahul-wyzen/image-bundle",
     "type": "symfony-bundle",
     "description": "A bundle providing fields for image upload with jquery upload and image cropping with jcrop for symfony2",
     "keywords": ["Form Type", "image", "upload", "crop", "jcrop", "jquery upload"],
@@ -27,9 +27,9 @@
         "friendsofsymfony/jsrouting-bundle": "@stable",
         "jms/translation-bundle": "@stable"
     },
-    "target-dir": "Comur/ImageBundle",
+    "target-dir": "Rahul-Wyzen/ImageBundle",
     "autoload": {
-        "psr-0": { "Comur\\ImageBundle": "" }
+        "psr-0": { "Rahul-Wyzen\\ImageBundle": "" }
     },
     "extra": {
         "branch-alias": {
